@@ -37,6 +37,7 @@ public class UserController {
             session.setAttribute("myuser",myuser);
             result.put("success", true);
         }
+        
         return result;
     }
 }
