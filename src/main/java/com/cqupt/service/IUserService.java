@@ -4,5 +4,5 @@ import com.cqupt.dao.model.User;
 
 public interface IUserService {
 
-    User login(Integer id);
+    User login(User user);
 }

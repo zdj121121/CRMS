@@ -11,5 +11,5 @@ public class UserServiceImpl implements IUserService{
     @Resource
     UserMapper userMapper;
 
-    public User login(Integer id){return userMapper.login(id);}
+    public User login(User user){return userMapper.login(user);}
 }

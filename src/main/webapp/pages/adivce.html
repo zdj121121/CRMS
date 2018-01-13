@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>后台管理登录</title>
+    <link rel='stylesheet' href='./css/common.css' />
+    <link rel='stylesheet' href='./css/identity.css' />
+    <link rel='stylesheet' href='./css/jquery.alerts.css' />
+
+</head>
+<body>
+<!-- 头部 -->
+<div id='header' class='header'>
+    <!-- 网站LOGO -->
+    <a href='Login.html' class='adminLogo'><img src='images/logo-login.png' /></a>
+    <div class='perInfor'>
+        <p class='welCon'>欢迎您，<strong class='w_userName'> </strong></p>
+        <a href='#' class='perInforLink'><i class='changeWp_ico'></i><span>修改密码</span></a>
+        <a href='#' class='perInforLink logOut'><i class='logOut_ico'></i><span>退出登录</span></a>
+        <a href='#' class='perInforLink'><i class='annou_ico'></i><span>公告</span></a>
+        <a href='#' class='perInforLink'><i class='help_ico'></i><span>帮助</span></a>
+    </div>
+</div>
+
+<!-- 主体 -->
+<div id='container' class='container'>
+    <!-- 菜单 -->
+    <div class='lefMenuWrap'>
+        <ul class='lefMenu'>
+            <li class='menuItem'><a class='menuLink' href='Login.html'><i class='sale_ico'></i><span>首页</span></a></li>
+            <li class='menuItem '><a class='menuLink' href='adviceroom.html'><i class='iden_ico'></i><span>机房信息管理</span></a></li>
+            <li class='menuItem'><a class='menuLink' href='user.html'><i class='charge_ico'></i><span>管理员用户管理</span></a></li>
+            <li class='menuItem menu_cur'><a class='menuLink' href='adivce.html'><i class='paper_ico'></i><span>设备信息管理</span></a></li>
+
+
+        </ul>
+    </div>
+    <!-- 主体 -->
+    <div class='conWrap'>
+        <div class='content'>
+            <!-- 主体索引 -->
+            <ul class='conNav'>
+                <li class='conNavItem cnFirItem'><a class='conNavLink' href='Login.html'><i class='index_ico'></i><span>平台首页>></span></a></li>
+                <li class='conNavItem cnSecItem'><a href='#'><span>设备信息管理</span></a></li>
+            </ul>
+            <!-- 主体标题 -->
+            <h2 class='conTit'>
+                <i class='conTit_ico'></i>
+                <span>设备信息管理</span>
+                <div class="right-agent" style="width: 300px;height: 100%;/*background: red;*/position: absolute;right: 0;box-sizing: border-box;padding-top: 25px;font-size: 14px;font-weight: lighter;float: left;">
+                    <div>
+                        <i class="icon_add" style="width: 30px;height: 30px; top: 18px; position: absolute; background: url('./images/menu_sprite.png') -36px -110px no-repeat;"></i>
+                        <a href="" style="padding-left: 30px;" class="tianjia">添加设备信息</a>
+                        <a href="adviceroom.html" class="agent-con" style="width: 40px; height: 30px; padding-left: 74px; box-sizing: border-box; padding-top: 2px;">导入</a>
+                    </div>
+                </div>
+            </h2>
+
+
+            <!-- 可以在这里写相关版块代码 -->
+            <div id="main">
+                    <div id="search">
+                    <span>
+                        <select name="searchkey" class="searchkey">
+                            <option value="">--请选择检索字段--</option>
+                            <option value="provider_number" >设备编号</option>
+                            <option value="provider_nume">设备类型</option>
+                            <option value="agencyphone">品牌</option>
+                            <option value="agencyphone">设备价格</option>
+                            <option value="agencyphone">配置说明</option>
+                            <option value="agencyphone">所在机房</option>
+                        </select>
+                        <input class="inp" name="inputvalue" size="20" type="text">
+                    </span>
+
+                    <span class="end">
+                        <input type="submit" value="搜索" onclick="search()"/>
+                    </span>
+            </div>
+            <table class="data_table table" align="center" >
+                <thead>
+                <tr align="center" style="background-color: #f6f6f6;">
+                    <td width="6%">序号</td>
+                    <td width="6%">设备编号</td>
+                    <td width="8%">设备类型</td>
+                    <td width="8%">品牌</td>
+                    <td width="12%">设备价格</td>
+                    <td width="12%">配置说明</td>
+                    <td width="12%">所在机房</td>
+                    <td width="12%">操作</td>
+                </tr>
+                </thead>
+                <tbody id="block" class="block" align="center">
+                </tbody>
+
+            </table>
+                <div id="pagiDiv" align="right"  style="width: 100%;height: 50px;font-size: 12px;">
+                    <ul style="width: 100%">
+                        <li><a class="pages f"  >第<span id="spanPageNum">1</span>页/共<span id="spanTotalPage"  class="all_page"></span>页</a></li>
+                        <li><a class="pages f"   onclick="spanLast()" >尾页</a></li>
+                        <li><a class="pages f"   onclick="spanNext()" >下一页</a></li>
+                        <li><a class="pages f"   onclick="spanPre()">上一页</a></li>
+                        <li><a class="pages f"   onclick="spanFirst()" >首页</a></li>
+                    </ul>
+                </div>
+            <div class="add-agent1" style="display: none; ">
+                <div class="add-agent1-head">
+                    <p>添加设备信息</p>
+                </div>
+
+                <div class="add-agent1-body"   style="margin: 10px auto;">
+                    <p class="formp">
+                        <label class="t">设备编号：</label>
+                        <input type="text" class="agencycompany" name="agencycompany"   value="" size="80">
+                    </p>
+                    <p class="formp">
+                        <label class="t">设备类型：</label>
+                        <input type="text" class="agencycompany" name="agencycompany"  value="" size="80">
+
+                    </p>
+                    <p class="formp">
+                        <label class="t">品牌：</label>
+                        <input type="text" class="agencycompany" name="agencycompany"   value="" size="80">
+
+                    </p>
+                    <p class="formp">
+                        <label class="t">设备价格：</label>
+                        <input type="text" class="agencycompany" name="agencycompany"  value="" size="80">
+                    </p>
+                    <p class="formp">
+                        <label class="t">配置说明：</label>
+                        <textarea type="textarea" style="height: 100px;width: 500px" placeholder="请输入文字..." class="agencycompany" name="agencycompany"  value="" size="80"></textarea>
+
+                    </p>
+                    <p class="formp">
+                        <label class="t">所在机房：</label>
+                        <input type="text" class="agencycompany" name="agencycompany"  value="" size="80">
+                    </p>
+                    <p class="formp end">
+                        <input type="submit" class="Btn" onclick="addAgency()" value="提&nbsp;&nbsp;&nbsp;交" style="font-size: 16px;text-align:center;background-color:#D1D1D1;;width: 80px;height: 35px;color: #1E88C7;border-radius: 3px;border: 1px solid #99D3F5;">
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="js/jQuery.js" type="text/javascript"></script>
+<script src="js/advice.js" type="text/javascript"></script>
+<script src="js/confirm/jquery.alerts.js" type="text/javascript"></script>
+<script src="js/confirm/jquery.ui.draggable.js" type="text/javascript"></script>
+<script src="js/confirm/Tc_jquery.js" type="text/javascript"></script>
+</body>
+</html>

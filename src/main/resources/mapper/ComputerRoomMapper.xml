@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cqupt.dao.mapper.ComputerRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.cqupt.dao.model.ComputerRoom" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="lab_name" property="labName" jdbcType="VARCHAR" />
+    <result column="room_num" property="roomNum" jdbcType="VARCHAR" />
+    <result column="building_num" property="buildingNum" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="person_responsible" property="personResponsible" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, lab_name, room_num, building_num, address, person_responsible, is_delete
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_computerroom
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_computerroom
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cqupt.dao.model.ComputerRoom" >
+    insert into t_computerroom (id, lab_name, room_num, 
+      building_num, address, person_responsible, 
+      is_delete)
+    values (#{id,jdbcType=INTEGER}, #{labName,jdbcType=VARCHAR}, #{roomNum,jdbcType=VARCHAR}, 
+      #{buildingNum,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{personResponsible,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cqupt.dao.model.ComputerRoom" >
+    insert into t_computerroom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="labName != null" >
+        lab_name,
+      </if>
+      <if test="roomNum != null" >
+        room_num,
+      </if>
+      <if test="buildingNum != null" >
+        building_num,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="personResponsible != null" >
+        person_responsible,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="labName != null" >
+        #{labName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNum != null" >
+        #{roomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingNum != null" >
+        #{buildingNum,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="personResponsible != null" >
+        #{personResponsible,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cqupt.dao.model.ComputerRoom" >
+    update t_computerroom
+    <set >
+      <if test="labName != null" >
+        lab_name = #{labName,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNum != null" >
+        room_num = #{roomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="buildingNum != null" >
+        building_num = #{buildingNum,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="personResponsible != null" >
+        person_responsible = #{personResponsible,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cqupt.dao.model.ComputerRoom" >
+    update t_computerroom
+    set lab_name = #{labName,jdbcType=VARCHAR},
+      room_num = #{roomNum,jdbcType=VARCHAR},
+      building_num = #{buildingNum,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      person_responsible = #{personResponsible,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

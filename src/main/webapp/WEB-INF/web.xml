@@ -44,4 +44,8 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  
+  <welcome-file-list>
+    <welcome-file>/pages/Login.html</welcome-file>
+  </welcome-file-list>
 </web-app>

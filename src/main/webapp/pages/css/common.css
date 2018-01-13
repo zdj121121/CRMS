@@ -1,0 +1,542 @@
+html, body {
+	padding: 0;
+	margin: 0;
+	font-family: Tahoma, 'SimSun';
+}
+p
+{
+	font-family: 'Microsoft Yahei';
+}
+/* 头部开始 */
+
+.header {
+	width: 100%;
+	height: 75px;
+	background: url(../images/login-bg.jpg) no-repeat 20% 50%;
+	overflow: hidden;
+}
+
+.adminLogo {
+	float: left;
+}
+
+.perInfor {
+	float: right;
+	margin-top: 28px;
+	margin-right: 10px;
+	font-size: 12px;
+	color: #000;
+	overflow: hidden;
+}
+
+.welCon {
+	float: left;
+	display: inline-block;
+	padding: 0;
+	padding-top: 3px;
+	margin: 0;
+	margin-right: 15px;
+}
+
+.perInforLink {
+	float: left;
+	display: inline-block;
+	height: 20px;
+	margin-right: 15px;
+	font-size: 12px;
+	text-decoration: none;
+	color: #000;
+	overflow: hidden;
+}
+
+.perInforLink span {
+	line-height: 20px;
+	margin-left: 2px;
+}
+
+.perInforLink span:hover {
+	color: #588C0E;
+}
+
+.logOut_ico, .annou_ico,
+.changeWp_ico, .help_ico {
+	float: left;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin-top: 2px;
+}
+
+.changeWp_ico {
+	background: url(../images/perInfor_ico.png) no-repeat 14% 0;
+}
+
+.logOut_ico {
+	background: url(../images/perInfor_ico.png) no-repeat 14% 0;
+}
+
+.annou_ico {
+	background: url(../images/perInfor_ico.png) no-repeat 0 0;
+}
+
+.help_ico {
+	background: url(../images/perInfor_ico.png) no-repeat 9% 0;
+}
+
+/* 主体开始 */
+
+/* 左边菜单开始 */
+
+.container {
+	float: left;
+	width: 100%;
+	min-height: 565px;
+	padding: 0;
+	margin: 0;
+	/*background: url('../images/container_bg.jpg') repeat;*/
+	overflow: hidden;
+}
+
+.lefMenuWrap {
+	float: left;
+	width: 111px;
+	padding-bottom: 9999px;
+	margin-bottom: -9999px; 
+	border-right: 1px #030304 solid;
+	background: url('../images/menu_bg.jpg') repeat;
+}
+
+.lefMenu {
+	padding: 0;
+	margin: 0;
+}
+
+.menuItem {
+	float: left;
+	width: 111px;
+	height: 76px;
+	border-bottom: 1px #3E454F solid;
+	list-style-type: none;
+	opacity: 0.5;
+	filter: alpha(opacity=50);
+}
+
+.menuLink {
+	display: block;
+	width: 80px;
+	height: 50px;
+	margin: 0 auto;
+	margin-top: 10px;
+	font-size: 12px;
+	text-align: center;
+	text-decoration: none;
+	color: #fff;
+}
+
+.iden_ico, .charge_ico, .paper_ico,
+.order_ico, .agent_ico, .agCharge_ico,
+.sale_ico {
+	display: block;
+	width: 36px;
+	height: 36px;
+	margin: 0 auto;
+	margin-bottom: 3px;
+}
+
+.iden_ico {
+	background: url('../images/lefMenu_ico.png') no-repeat 51% 0;
+}
+
+.charge_ico {
+	background: url('../images/lefMenu_ico.png') no-repeat 32% 0;
+}
+
+.paper_ico {
+	background: url('../images/lefMenu_ico.png') no-repeat 0 0;
+}
+
+.order_ico {
+	background: url('../images/lefMenu_ico.png') no-repeat 25.5% 0;
+}
+
+.agent_ico {
+	background: url('../images/lefMenu_ico.png') no-repeat 32% 0;
+}
+
+.agCharge_ico {
+	background: url('../images/lefMenu_ico.png') no-repeat 19% 0;
+}
+
+.sale_ico {
+	background: url('../images/lefMenu_ico.png') no-repeat 38% 0;
+}
+
+/* 索引所在样式 */
+.menu_cur {
+	width: 112px;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	background: url(../images/menu_cur.png) no-repeat 0 -12px;
+}
+
+
+/* 主体开始 */
+
+.conWrap {
+	background: url(../images/hea_bg.jpg) repeat-x 0 -75px;
+	margin-left: 112px;
+	margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.content {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+/* 主体索引 */
+
+.conNav {
+	width: 100%;
+	height: 35px;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.conNavItem {
+	float: left;
+	list-style-type: none;
+}
+
+.conNavLink {
+	display: inline-block;
+}
+
+.index_ico {
+	float: left;
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin: 10px 0 0 30px; 
+	background: url('../images/perInfor_ico.png') no-repeat 5% 0;
+}
+
+
+
+.conNavItem span {
+	float: left;
+	display: inline-block;
+	margin: 10px 0 0 5px;
+	font-size: 12px;
+	color: #959BA1;
+}
+
+/* 主体标题 */
+.conTit {
+	padding: 0;
+	margin: 0;
+	height: 65px;
+	overflow: hidden;
+	position: relative;
+}
+
+.right
+{
+	width: 700px;
+	height: 100%;
+	/*background: red;*/
+	position: absolute;
+	right: 0;
+	box-sizing: border-box;
+	padding-top: 23px;
+	font-size: 14px;
+	font-weight: lighter;
+
+}
+
+
+
+.right .inputSelect
+{
+	border-radius: 2px;
+	border:0;
+}
+
+.right .output
+{
+	text-decoration: none;float:right;margin-right:60px;color: black;position: relative;
+}
+
+.right .output p
+{
+	position: absolute;display: inline;z-index: 100;
+}
+
+
+.icon_out
+{
+
+	width: 30px;
+	height: 30px;
+	top: -21px;
+	position: absolute;
+	background: url("../images/menu_sprite.png") -36px -109px no-repeat;
+}
+
+.right-agent /*-----------------------------------------*/
+{
+	width: 300px;
+	height: 100%;
+	/*background: red;*/
+	position: absolute;
+	right: 0;
+	box-sizing: border-box;
+	padding-top: 46px;
+	font-size: 14px;
+	font-weight: lighter;
+	float: left;
+
+}
+
+
+
+
+.icon_add
+{
+
+	width: 30px;
+	height: 30px;
+	top: 38px;
+	position: absolute;
+	background: url("../images/menu_sprite.png") -36px -109px no-repeat;
+}
+
+.add-agent1
+{
+	width: 100%;
+	height: 1200px;
+	background: white;
+	position: relative;
+}
+
+.add-agent1 .add-agent1-head
+{
+	width: 100%;
+	height: 100px;
+	/*background: red;*/
+}
+
+.add-agent1 .add-agent1-head p
+{
+	width: 300px;
+	height: 100%;
+	position: absolute;
+	font-size: 26px;
+	/*font-weight: bold;*/
+	box-sizing: border-box;
+	padding-top: 30px;
+	padding-left: 50px;
+}
+
+
+.add-agent1 .add-agent1-head hr
+{
+	width: 100%;
+	height: 2px;
+	position: absolute;
+	margin-top: 100px;
+	background: black;
+}
+
+.add-agent1 .add-agent1-body
+{
+	width: 100%;
+	height: 1100px;
+	/*background: green;*/
+	margin-top: 50px;
+	box-sizing: border-box;
+}
+
+.add-agent1 .add-agent1-body form
+{
+	width: 750px;
+	height: 1100px;
+	/*background: red;*/
+	float: left;
+	/*margin-top: 50px;*/
+}
+
+.add-agent1 .add-agent1-body .formp
+{
+	clear: both;
+    min-height: 30px;
+    padding-top: 0;
+    position: relative;
+    padding-left: 90px;
+    margin-left: 9px;
+    margin-bottom: 15px;
+    line-height: 24px;
+}
+
+
+.add-agent1 .add-agent1-body .add-form1
+{
+	width: 550px;
+	height: 1100px;
+	position: absolute;
+	float: right;
+	/*background:black;*/
+	right: 0;
+	box-sizing: border-box;
+	margin-top: -110px;
+}
+
+.conTit_ico {
+	float: left;
+	display: inline-block;
+	width: 26px;
+	height: 26px;
+	margin: 20px 5px 0 30px; 
+	background: url('../images/lefMenu_ico.png') no-repeat 1% 41.5%;
+}
+
+.conTit span {
+	float: left;
+	padding: 0;
+	margin: 0;
+	line-height: 65px;
+	font-size: 18px;
+	font-family: 'Microsoft Yahei';
+	letter-spacing: 1px;
+}
+.f-btn{
+	float:left;
+	border: 2px solid #eeeeee;
+	left: 1000px;
+}
+.add-agent1 .add-agent1-body form
+{
+	width: 750px;
+	height: 1100px;
+	margin: 0 auto;
+}
+.f1{
+	float: left;
+}
+.form-group1{
+	float:left;
+}
+.table thead tr td {
+	border: 1px solid #e8eaed;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-size: 12px;
+}
+
+.btn{
+	background-color: #ffffff;
+	color:#093;
+}
+#pagiDiv{
+	margin-top: 0px;
+}
+#config_info .con
+{
+	line-height:26px;
+	margin:21px 0 0 0;
+	padding:18px 0 0 20px;
+	border-radius:6px;
+	width:265px;
+	background:#eee;
+	border:1px #666 dashed;
+	position:relative;
+}
+#config_info dd{ height:38px;}
+
+
+#config_info dd.mark{
+	position:absolute;
+	left:0; top:0;
+	width:90px;
+	height:25px;
+	line-height:22px;
+	color:#fff; text-align:left;
+	padding:0 0 0 12px;
+	border-radius:6px 0 0 0;
+}
+#config_info .tit
+{
+	display:inline-block;
+	text-align:center;
+	line-height:44px;
+}
+#config_info .inp
+{
+	display:inline-block;
+	width:60px;
+	text-align:center;
+	height:26px;
+	line-height:26px;
+	border:1px #ccc solid;
+}
+#config_info .txt
+{
+	width:60px;
+	height:26px;
+	line-height:26px;
+	text-align:center;
+	padding-right:3px;
+	position:relative;
+	top:-2px;
+	margin-left:12px;
+	ime-mode:disabled;
+}
+
+
+#rebateCon_ufi .tit{ text-align:right; padding-right:5px; line-height:36px;}
+#rebateCon_ufi .txt{ margin-right:5px; margin-left:0;}
+
+
+#rebateCon_rentsim .tit{ text-align:right; padding-right:5px; line-height:36px;}
+#rebateCon_rentsim .txt{ margin-right:5px; margin-left:0;}
+
+label{text-align:right; width:200px; float:left;}
+.Btn{
+	margin-left: 250px;
+	position: relative;
+	bottom: -20px;
+}
+
+.table thead tr td {
+	border: 1px solid #e8eaed;
+}
+.table thead tr{
+	height: 20px;
+	background-color: #f6f6f6;
+}
+.f{
+	float:left;
+}
+#pagiDiv ul li{
+	float: right;
+	list-style: none;
+	margin-left: 5px;
+}
+#pagiDiv{
+	float: right;
+
+}
+#search span {
+	margin-bottom:8px;
+}
+.t1{
+	float: right;
+	left: 0px ;
+}
+
+
+/*-----------------------------------*/

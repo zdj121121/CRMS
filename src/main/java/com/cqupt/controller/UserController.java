@@ -23,20 +23,18 @@ public class UserController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public Map<String, Boolean> login(HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
-       // String json=request.getParameter("user");
-        //JSONObject jsonObject= JSONObject.fromObject(json);
-        //String user_phone=jsonObject.getString("user_phone");
-        //String user_pwd=jsonObject.getString("user_pwd");
-       // User user =new User();
-       // user.setId(1);
-        User myuser=userService.login(1);
-        Map<String, Boolean> result = new HashMap<>();
+    public Map<String, Object> login(User user,HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
+        User myuser=userService.login(user);
+        Map<String, Object> result = new HashMap<>();
         if(myuser==null){
             result.put("success", false);
         }else {
-            session.setAttribute("myuser",myuser);
+            session.setAttribute("Id",myuser.getId());
+            session.setAttribute("accountNum",myuser.getAccountNum());
+            session.setAttribute("userName",myuser.getUserName());
             result.put("success", true);
+            result.put("IsAdmin",myuser.getIsAdmin());
+            result.put("userName",myuser.getUserName());
         }
         return result;
     }

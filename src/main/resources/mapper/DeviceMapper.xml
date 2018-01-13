@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cqupt.dao.mapper.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.cqupt.dao.model.Device" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="device_num" property="deviceNum" jdbcType="VARCHAR" />
+    <result column="room_num" property="roomNum" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="device_value" property="deviceValue" jdbcType="DOUBLE" />
+    <result column="config_help" property="configHelp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, device_num, room_num, device_type, brand, device_value, config_help
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_devices
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_devices
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cqupt.dao.model.Device" >
+    insert into t_devices (id, device_num, room_num, 
+      device_type, brand, device_value, 
+      config_help)
+    values (#{id,jdbcType=INTEGER}, #{deviceNum,jdbcType=VARCHAR}, #{roomNum,jdbcType=VARCHAR}, 
+      #{deviceType,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR}, #{deviceValue,jdbcType=DOUBLE}, 
+      #{configHelp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cqupt.dao.model.Device" >
+    insert into t_devices
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceNum != null" >
+        device_num,
+      </if>
+      <if test="roomNum != null" >
+        room_num,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="deviceValue != null" >
+        device_value,
+      </if>
+      <if test="configHelp != null" >
+        config_help,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceNum != null" >
+        #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNum != null" >
+        #{roomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceValue != null" >
+        #{deviceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="configHelp != null" >
+        #{configHelp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cqupt.dao.model.Device" >
+    update t_devices
+    <set >
+      <if test="deviceNum != null" >
+        device_num = #{deviceNum,jdbcType=VARCHAR},
+      </if>
+      <if test="roomNum != null" >
+        room_num = #{roomNum,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceValue != null" >
+        device_value = #{deviceValue,jdbcType=DOUBLE},
+      </if>
+      <if test="configHelp != null" >
+        config_help = #{configHelp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cqupt.dao.model.Device" >
+    update t_devices
+    set device_num = #{deviceNum,jdbcType=VARCHAR},
+      room_num = #{roomNum,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      device_value = #{deviceValue,jdbcType=DOUBLE},
+      config_help = #{configHelp,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
