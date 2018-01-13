@@ -1,8 +1,9 @@
-package com.cqupt.service;
+package com.cqupt.dao.mapper;
 
 import com.cqupt.dao.model.User;
 
-public interface IUserService {
+public interface UserMapper {
 
     User login(Integer id);
+
 }

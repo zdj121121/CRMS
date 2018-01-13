@@ -1,4 +1,4 @@
-package com.cqupt.service.dao.model;
+package com.cqupt.dao.model;
 
 public class User {
     private Integer id;

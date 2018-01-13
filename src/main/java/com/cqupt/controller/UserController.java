@@ -1,7 +1,7 @@
 package com.cqupt.controller;
 
 import com.cqupt.service.IUserService;
-import com.cqupt.service.dao.model.User;
+import com.cqupt.dao.model.User;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +22,7 @@ public class UserController {
     IUserService userService;
 
     @RequestMapping("/login")
+    @ResponseBody
     public Map<String, Boolean> login(HttpServletResponse response, HttpServletRequest request, HttpSession session) throws IOException {
        // String json=request.getParameter("user");
         //JSONObject jsonObject= JSONObject.fromObject(json);
