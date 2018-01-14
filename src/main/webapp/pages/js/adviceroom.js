@@ -78,7 +78,7 @@ function mSubmit(){
     };
     //显示总页数
     $.ajax({
-        url : 'agency/getchildren',
+        url : '/computerRoomController/getPageDate',
         type : 'post',
         contentType:"application/json",
         data:JSON.stringify(agencyInput),
@@ -99,8 +99,8 @@ function mSubmit(){
                             str1= '<td>'+' <a href="#" onclick="Forbidden('+striccid+')" class="Forbidden">'+'编辑'+'</a>' +' <a href="#" onclick="start('+striccid+')" class="start">'+'删除'+'</a>'  +'</td>' ;
                         item += " <tr>"  +
                             "<td>" + serialNumber+ "</td>" +
-                            "<td>"+ result.supplierId + "</td>" +
-                            "<td>"+ result.supplierName + "</td>"+
+                            "<td>"+ result.labName + "</td>" +
+                            "<td>"+ result.buildingNum + "</td>"+
                             "<td>" + result.legalRepresentative+ "</td>" +
                             "<td>"+ result.businessContacts + "</td>" +
                             "<td>"+ result.phoneNumber + "</td>"+

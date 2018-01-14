@@ -114,4 +114,41 @@
       is_delete = #{isDelete,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotal" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM t_computerroom
+  </select>
+
+  <select id="getPageDate" parameterType="Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_computerroom
+
+    ORDER BY
+    <choose>
+      <otherwise>
+        id DESC
+      </otherwise>
+    </choose>
+
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+
+  <select id="selective" parameterType="Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_computerroom
+
+    where ${keyWord}=${keyValue}
+
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+
+  <select id="getSelectiveNum" parameterType="Map" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM t_computerroom where ${keyWord}=${keyValue}
+  </select>
 </mapper>

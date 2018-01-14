@@ -114,4 +114,41 @@
       config_help = #{configHelp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotal" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM t_devices
+  </select>
+
+  <select id="getPageDate" parameterType="Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_devices
+
+    ORDER BY
+    <choose>
+      <otherwise>
+        id DESC
+      </otherwise>
+    </choose>
+
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+
+  <select id="selective" parameterType="Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_devices
+
+    where ${keyWord}=${keyValue}
+
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+
+  <select id="getSelectiveNum" parameterType="Map" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM t_devices where ${keyWord}=${keyValue}
+  </select>
 </mapper>
