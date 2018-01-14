@@ -26,14 +26,16 @@ public class ComputerRoomController {
     @Resource
     IComputerRoomService computerRoomService;
 
-    @RequestMapping("/getPageDate")
+    @RequestMapping("/getPageData")
     @ResponseBody
-    public Map<String,Object> getPageDate(@RequestParam(value = "pageNum", defaultValue = "2") Integer pageNum,
-                                          HttpSession session){
+    public Map<String,Object> getPageDate(HttpServletRequest request,HttpSession session){
         int total=computerRoomService.getTotal();
         Page page = new Page();
         page.setTotalCount(total);
-        page.setPageNo(pageNum);
+         String json=request.getParameter("data");
+         JSONObject jsonObject= JSONObject.fromObject(json);
+        //String pageNum= jsonObject.getString("pageNum");
+        page.setPageNo(1);
         Map<String, Object> map=new HashMap<>();
         map.put("start",page.getStartRow());
         map.put("size", page.getPageSize());
@@ -48,15 +50,17 @@ public class ComputerRoomController {
 
     @RequestMapping("/selective")
     @ResponseBody
-    public Map<String,Object> selective(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
-                                        @RequestParam(value = "key") String key,
-                                        @RequestParam(value = "value") String value,
-                                        HttpSession session){
+    public Map<String,Object> selective(HttpServletRequest request, HttpSession session){
+        String json=request.getParameter("data");
+        JSONObject jsonObject= JSONObject.fromObject(json);
          //key="lab_name";
         //value= String.valueOf(2);
+        String key = jsonObject.getString("key");
+        String value= jsonObject.getString("value");
+        String searchText = new StringBuilder("'%").append(value).append("%'").toString();
         Map<String, Object> map=new HashMap<String, Object>();
         map.put("keyWord",key);
-        map.put("keyValue",value);
+        map.put("keyValue",searchText);
         int total = computerRoomService.getSelectiveNum(map);
         JSONObject result = new JSONObject();
         if(total!=0&&total>0) {

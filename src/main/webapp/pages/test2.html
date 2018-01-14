@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="js/jQuery.js" type="text/javascript"></script>
+<body>
+<table id="tb">
+    <tr>
+        <td>a</td>
+        <td>b</td>
+        <td>c</td>
+    </tr>
+    <tr>
+        <td>aa</td>
+        <td>bb</td>
+        <td>cc</td>
+    </tr>
+</table>
+
+<script>
+    //以jquery为例实现点击某行获得某个td的数据
+    $( "#tb tr" ).click( function() {//给每行绑定了一个点击事件
+        var td = $( this ).find( "td").eq(2).text();//this指向了当前点击的行，通过find我们获得了该行所有的td对象
+        alert(td);
+        //题中说到某个td，为了演示所以我们假设是要获得第3个td的数据
+        var data = td.eq( 2 ).html();//通过eq可以得到具体的某个td对象，从而得到相应的数据
+    } );
+</script>
+</body>
+</html>

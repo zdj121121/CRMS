@@ -29,7 +29,7 @@ public class DeviceController {
 
     @RequestMapping("/getPageDate")
     @ResponseBody
-    public Map<String,Object> getPageDate(@RequestParam(value = "pageNum", defaultValue = "2") Integer pageNum,
+    public Map<String,Object> getPageDate(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
                                           HttpSession session){
         int total=deviceService.getTotal();
         Page page = new Page();

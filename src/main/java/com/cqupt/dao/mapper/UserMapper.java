@@ -2,6 +2,9 @@ package com.cqupt.dao.mapper;
 
 import com.cqupt.dao.model.User;
 
+import java.util.List;
+import java.util.Map;
+
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +19,8 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User login(User user);
+
+    List<User> getUserInfo(Map<String,Object> map);
+
+    int getTotal();
 }

@@ -25,63 +25,70 @@ var serialNumber = 0;
 
 var pDuan1 ="";
 var pDuan2 ="";
+var pare1="";
+var pare2="";
 
+function Forbidden(pare){
+    pare1=pare;
 
-function Forbidden(pare1){
-    $.ajax({
-        url : 'agency/stop',
-        type : 'post',
-        data: {agencyid: pare1},
-        async : false,
-        dateType : 'json',
-        success : function(data) {
-            if (data.status == 1){
-                alert("删除成功");
-            }else{
-                alert("删除失败");
-            }
-        },
-        error : function(e){
-            alert("删除失败");
-        }
-    });
-    search();
 }
-//function start(pare){
-//    $.ajax({
-//        url : 'agency/start',
-//        type : 'post',
-//        async : false,
-//        data: {agencyid: pare},
-//        dateType : 'json',
-//        success : function(data) {
-//            if (data.status == 1){
-//                alert("启用成功");
-//            }else{
-//                alert("启用失败");
-//            }
-//        },
-//        error : function(e){
-//            alert("启用失败");
-//        }
-//    });
-//    search();
-//}
+function start(pare){
+    pare2=pare;
+
+    $.ajax(
+        {
+            url: "/computerRoomController/delete",
+            data:{
+                "id":pare2
+            },
+            type: "post",
+            // beforeSend:function()
+            // {
+            //     $("#tip").html("<span style='color:blue'>正在处理...</span>");
+            //     return true;
+            // },
+            success:function(data)
+            {
+                if(data=true)
+                {
+                    alert('删除成功');
+
+                    location.reload();
+                }
+                else
+                {
+                    // $("#tip").html("<span style='color:red'>失败，请重试</span>");
+                    alert('操作失败');
+                }
+            },
+            error:function()
+            {
+                alert('请求出错');
+            },
+            complete:function()
+            {
+                // $('#tips').hide();
+            }
+        });
+
+    return false;
+
+}
 
 //默认请求
 function mSubmit(){
     //显示当前页数
     $("#spanPageNum").html(currentpage);
     var agencyInput={
-        'page':currentpage,
+        'page':1,
         'size':size
     };
     //显示总页数
     $.ajax({
-        url : '/computerRoomController/getPageDate',
+        url : '/computerRoomController/getPageData',
         type : 'post',
-        contentType:"application/json",
-        data:JSON.stringify(agencyInput),
+        contentType: "application/x-www-form-urlencoded;charset=utf-8", //上传数据格式为json格式
+        data:"data="+JSON.stringify(agencyInput),
         dateType : 'json',
         success : function(data) {
             //data是什么格式,如果是json记住要解析
@@ -95,34 +102,35 @@ function mSubmit(){
                 $(data.data).each(
                     function(i, result) {
                         serialNumber = i + 1;
-                        var striccid="'"+result.supplierId+"'";
-                            str1= '<td>'+' <a href="#" onclick="Forbidden('+striccid+')" class="Forbidden">'+'编辑'+'</a>' +' <a href="#" onclick="start('+striccid+')" class="start">'+'删除'+'</a>'  +'</td>' ;
+                        var striccid="'"+result.id +"'";
+                        td=result.id;
+                        str1= '<td>'+' <a href="#" onclick="Forbidden('+striccid+')" class="Forbidden bt"data-toggle="modal"  data-target="#addUserModal" style="text-decoration: none;">'+'编辑'+'</a>' +' <a href="#" onclick="start('+striccid+')" class="start">'+'删除'+'</a>'  +'</td>' ;
                         item += " <tr>"  +
                             "<td>" + serialNumber+ "</td>" +
+                            "<td>"+ result.id + "</td>" +
                             "<td>"+ result.labName + "</td>" +
                             "<td>"+ result.buildingNum + "</td>"+
-                            "<td>" + result.legalRepresentative+ "</td>" +
-                            "<td>"+ result.businessContacts + "</td>" +
-                            "<td>"+ result.phoneNumber + "</td>"+
-                            "<td>" + result.businessLicense+ "</td>" +
-                            "<td>"+ result.taxAccount + "</td>" +
+                            "<td>" + result.roomNum+ "</td>" +
+                            "<td>"+ result.address + "</td>" +
+                            "<td>"+ result.personResponsible + "</td>" +
                             str1+
                             "</tr>";
                     });
                 $('.block').append(item);
                 var number = data.total;
-                var NumberOfPages = (number % size==0) ? parseInt(number / size):parseInt(number / size) + 1;//需要判断是否能能够整除 能够整除则不+1？？？
-                $("#spanTotalPage").html(NumberOfPages);
+                var NumberOfPages = data.totalPage;//需要判断是否能能够整除 能够整除则不+1？？？
+                $("#spanTotalPage").html(data.totalPage);
                 totalpage = NumberOfPages;
+
             }
         }
     });
+
 }
 
 /*表格控制*/
 $(document).ready(
     function() {
-
         mSubmit();
     });
 //第一页
@@ -151,7 +159,6 @@ function spanPre(){
     if(	   pDuan1!= $('.searchkey').val()||
         pDuan2!=$('.inp').val()){
         $(".block").empty();//将表单置空
-        search();
     }else {
         var flag = "prePage";
         if (currentpage == 1) {
@@ -164,19 +171,14 @@ function spanPre(){
             querybypage(page, size);
         }
     }
+
 }
 
 //下一页事件
 function spanNext(){
     $("#spanPageNum").html(1);
     $("#spanTotalPage").html(1);
-    if(pDuan1!= $('.searchkey').val()||
-        pDuan2!=$('.inp').val()||
-        pDuan3!=$('#province').val()+ $('#city').val()+$('#district').val()||
-        pDuan4!=$('.agencystatus').val()){
-        $(".block").empty();//将表单置空
-        search();
-    }else {
+    $(".block").empty();//将表单置空
         var flag = "nextPage";
         if (currentpage == totalpage) {
             alert("这已经是最后一页");
@@ -185,9 +187,9 @@ function spanNext(){
             var page = currentpage + 1;
             currentpage = currentpage + 1;
             $("#spanPageNum").html(currentpage);//替换是第几页数据
-            querybypage(page, size);//
+            querybypage(2, size);//
         }
-    }
+
 }
 //最后一页
 function spanLast(){
@@ -203,25 +205,22 @@ function spanLast(){
         currentpage = totalpage;
         $(".block").empty();//将表单置空
         $("#spanPageNum").html(currentpage);
-        querybypage(totalpage, size);
+        querybypage(2, size);
     }
 }
 //跳页请求
 function querybypage(page, size)//page:当前是第几页，每一页的记录条数
 {
+    $(".block").empty();//将表单置空
     var agencyInput={
-        'page' :   page,
-        'size' :   size,
-        'searchkey' : $('.searchkey').val(),
-        'inputvalue' :$('.inp').val()
+        page :   currentpage
+
     };
-    pDuan1 = $('.searchkey').val();
-    pDuan2 =$('.inp').val();
     $.ajax({
-        url : "agency/getchildren",
+        url : "/computerRoomController/getPageData",
         type : "post",
-        contentType:"application/json",//上传数据格式为json格式
-        data :JSON.stringify(agencyInput),
+        contentType: "application/x-www-form-urlencoded;charset=utf-8", //上传数据格式为json格式
+        data :"data="+JSON.stringify(agencyInput),
         dateType :"json",
         success : function(data) {
             //data是什么格式,如果是json记住要解析
@@ -235,23 +234,22 @@ function querybypage(page, size)//page:当前是第几页，每一页的记录�
                     function(i, result) {
                         serialNumber = i + 1;
                         var striccid="'"+result.supplierId+"'";
-                        str1= '<td>'+' <a href="#" onclick="Forbidden('+striccid+')" class="Forbidden">'+'编辑|'+'</a>' +' <a href="#" onclick="start('+striccid+')" class="start">'+'删除'+'</a>'  +'</td>' ;
+                        str1= '<td>'+' <a href="#" onclick="Forbidden('+striccid+')" class="Forbidden bt"data-toggle="modal"  data-target="#addUserModal" style="text-decoration: none;">'+'编辑'+'</a>' +' <a href="#" onclick="start('+striccid+')" class="start">'+'删除'+'</a>'  +'</td>' ;
                         item += " <tr>"  +
                             "<td>" + serialNumber+ "</td>" +
-                            "<td>"+ result.supplierId + "</td>" +
-                            "<td>"+ result.supplierName + "</td>"+
-                            "<td>" + result.legalRepresentative+ "</td>" +
-                            "<td>"+ result.businessContacts + "</td>" +
-                            "<td>"+ result.phoneNumber + "</td>"+
-                            "<td>" + result.businessLicense+ "</td>" +
-                            "<td>"+ result.taxAccount + "</td>" +
+                            "<td>"+ result.id + "</td>" +
+                            "<td>"+ result.labName + "</td>" +
+                            "<td>"+ result.buildingNum + "</td>"+
+                            "<td>" + result.roomNum+ "</td>" +
+                            "<td>"+ result.address + "</td>" +
+                            "<td>"+ result.personResponsible + "</td>" +
                             str1+
                             "</tr>";
                     });
                 $('.block').append(item);
                 var number = data.total;
-                var NumberOfPages = (number % size==0) ? parseInt(number / size):parseInt(number / size) + 1;//需要判断是否能能够整除 能够整除则不+1？？？
-                $("#spanTotalPage").html(NumberOfPages);
+                //var NumberOfPages = (number % size==0) ? parseInt(number / size):parseInt(number / size) + 1;//需要判断是否能能够整除 能够整除则不+1？？？
+                $("#spanTotalPage").html(data.totalPage);
                 totalpage = NumberOfPages;
             }
         }
@@ -259,27 +257,28 @@ function querybypage(page, size)//page:当前是第几页，每一页的记录�
 }
 //条件收搜  确保取值正确 （地址全部取一个值）
 function search() {
+
     pDuan1 =$('.searchkey').val();
     pDuan2 =$('.inp').val();
+    alert(pDuan1);
     $("#spanPageNum").html(1);
     $(".block").empty();
     currentpage = 1;
     var agencyInput={
-        'page' :   currentpage,
-        'size' :   size,
-        'searchkey' : $('.searchkey').val(),
-        'inputvalue' :$('.inp').val()
+        "key":pDuan1,
+        "value":pDuan2
     };
     $.ajax({
-        url : "agency/getchildren",
-        type : "post",
-        contentType:"application/json",//上传数据格式为json格式
-        data :JSON.stringify(agencyInput),
-        dateType :"json",
+        url : '/computerRoomController/selective',
+        type : 'post',
+        contentType: "application/x-www-form-urlencoded;charset=utf-8", //上传数据格式为json格式
+        data:"data="+JSON.stringify(agencyInput),
+        dateType : 'json',
         success : function(data) {
             //data是什么格式,如果是json记住要解析
             var item = '';
             var str='';
+            $(".w_userName").html(data.userName);
             if (data.total == 0) {
                 $("#spanPageNum").html(1);
                 $("#spanTotalPage").html(1);
@@ -287,25 +286,26 @@ function search() {
                 $(data.data).each(
                     function(i, result) {
                         serialNumber = i + 1;
-                        var striccid="'"+result.supplierId+"'";
-                        str1= '<td>'+' <a href="#" onclick="Forbidden('+striccid+')" class="Forbidden">'+'编辑'+'</a>' +' <a href="#" onclick="start('+striccid+')" class="start">'+'删除'+'</a>'  +'</td>' ;
+                        var striccid="'"+result.id +"'";
+                        td=result.id;
+                        str1= '<td>'+' <a href="#" onclick="Forbidden('+striccid+')" class="Forbidden bt"data-toggle="modal"  data-target="#addUserModal" style="text-decoration: none;">'+'编辑'+'</a>' +' <a href="#" onclick="start('+striccid+')" class="start">'+'删除'+'</a>'  +'</td>' ;
                         item += " <tr>"  +
                             "<td>" + serialNumber+ "</td>" +
-                            "<td>"+ result.supplierId + "</td>" +
-                            "<td>"+ result.supplierName + "</td>"+
-                            "<td>" + result.legalRepresentative+ "</td>" +
-                            "<td>"+ result.businessContacts + "</td>" +
-                            "<td>"+ result.phoneNumber + "</td>"+
-                            "<td>" + result.businessLicense+ "</td>" +
-                            "<td>"+ result.taxAccount + "</td>" +
+                            "<td>"+ result.id + "</td>" +
+                            "<td>"+ result.labName + "</td>" +
+                            "<td>"+ result.buildingNum + "</td>"+
+                            "<td>" + result.roomNum+ "</td>" +
+                            "<td>"+ result.address + "</td>" +
+                            "<td>"+ result.personResponsible + "</td>" +
                             str1+
                             "</tr>";
                     });
                 $('.block').append(item);
                 var number = data.total;
-                var NumberOfPages = (number % size==0) ? parseInt(number / size):parseInt(number / size) + 1;//需要判断是否能能够整除 能够整除则不+1？？？
-                $("#spanTotalPage").html(NumberOfPages);
+                var NumberOfPages = data.totalPage;//需要判断是否能能够整除 能够整除则不+1？？？
+                $("#spanTotalPage").html(data.totalPage);
                 totalpage = NumberOfPages;
+
             }
         }
     });
@@ -344,15 +344,20 @@ function addAgency() {
     jConfirm('是否提交?', '确定对话框', function(r) {
         if(r=true){
             $.ajax({
-                url : "agency/addagency",
-                type : "post",
-                contentType:"application/json",//上传数据格式为json格式
-                data :JSON.stringify(agency),
-                dateType :"json",
+
+                url: "/computerRoomController/add",
+                data:{
+                    "labName":$("#shiyanlou").val(),
+                    "buildingNum":$("#loudonghao").val(),
+                    "roomNum": $("#fangjianhao").val(),
+                    "address":$("#xiangxidizhi").val(),
+                    "personResponsible":$("#jifangfuzeren").val()
+                },
+                type: "post",
                 success :
                     function(data) {
                     jAlert('提交成功'+r,'提交成功');
-                   // location.reload();
+                    location.reload();
                 },
                 error:function(){
                     jAlert('提交失败',"提交失败");
@@ -366,3 +371,194 @@ function addAgency() {
     });
 
 }
+
+//模态框
+// 提交表单
+function get_edit_info(user_id)
+{
+    if(!id)
+    {
+        alert('Error！');
+        return false;
+    }
+    // var form_data = new Array();
+
+    $.ajax(
+        {
+            url: "/computerRoomController/update",
+            data:{
+                "id":pare1,
+                "labName":$("#user_id").val(),
+                "buildingNum":$("#user_name").val(),
+                "roomNum": $("#room_num").val(),
+                "address":$("#address").val(),
+                "personResponsible":$("#f_people").val()
+            },
+            type: "post",
+            beforeSend:function()
+            {
+                $("#tip").html("<span style='color:blue'>正在处理...</span>");
+                return true;
+            },
+            success:function(data)
+            {
+                if(data > 0)
+                {
+                    alert('操作成功');
+                    $("#tip").html("<span style='color:blueviolet'>恭喜，删除成功！</span>");
+
+                    // document.location.href='world_system_notice.php'
+                    location.reload();
+                }
+                else
+                {
+                    $("#tip").html("<span style='color:red'>失败，请重试</span>");
+                    alert('操作失败');
+                }
+            },
+            error:function()
+            {
+                alert('请求出错');
+            },
+            complete:function()
+            {
+                // $('#tips').hide();
+            }
+        });
+
+    return false;
+}
+
+// 编辑表单
+// function get_edit_info(user_id)
+// {
+//     if(!user_id)
+//     {
+//         alert('Error！');
+//         return false;
+//     }
+//     // var form_data = new Array();
+//
+//     $.ajax(
+//         {
+//             url: "action/user_action.php",
+//             data:{"user_id":user_id, "act":"get"},
+//             type: "post",
+//             beforeSend:function()
+//             {
+//                 // $("#tip").html("<span style='color:blue'>正在处理...</span>");
+//                 return true;
+//             },
+//             success:function(data)
+//             {
+//                 if(data)
+//                 {
+//
+//                     // 解析json数据
+//                     var data = data;
+//
+//                     var data_obj = eval("("+data+")");
+//
+//                     // 赋值
+//                     $("#user_id").val(data_obj.user_id);
+//
+//                     $("#name").val(data_obj.name);
+//                     $("#address").val(data_obj.address);
+//                     $("#remark").val(data_obj.remark);
+//                     $("#act").val("edit");
+//
+//                     // 将input元素设置为readonly
+//                     $('#user_id').attr("readonly","readonly")
+//                     // location.reload();
+//                 }
+//                 else
+//                 {
+//                     $("#tip").html("<span style='color:red'>失败，请重试</span>");
+//                     //  alert('操作失败');
+//                 }
+//             },
+//             error:function()
+//             {
+//                 alert('请求出错');
+//             },
+//             complete:function()
+//             {
+//                 // $('#tips').hide();
+//             }
+//         });
+//
+//     return false;
+// }
+
+// 提交表单
+function check_form()
+{
+    var user_id = $.trim($('#user_id').val());
+    var act     = $.trim($('#act').val());
+
+    if(!user_id)
+    {
+        alert('用户ID不能为空！');
+        return false;
+    }
+    var form_data = $('#form_data').serialize();
+
+    // 异步提交数据到action/add_action.php页面
+    $.ajax(
+        {
+            url: "/computerRoomController/update",
+            data:{
+                "id":pare1,
+                "labName":$("#user_id").val(),
+                "buildingNum":$("#user_name").val(),
+                "roomNum": $("#room_num").val(),
+                "address":$("#address").val(),
+                "personResponsible":$("#f_people").val()
+            },
+            type: "post",
+            beforeSend:function()
+            {
+                $("#tip").html("<span style='color:blue'>正在处理...</span>");
+                return true;
+            },
+            success:function(data)
+            {
+                if(data=true)
+                {
+                    alert('操作成功');
+                    $("#tip").html("<span style='color:blueviolet'>恭喜，删除成功！</span>");
+
+                    // document.location.href='world_system_notice.php'
+                    location.reload();
+                }
+                else
+                {
+                    $("#tip").html("<span style='color:red'>失败，请重试</span>");
+                    alert('操作失败');
+                }
+            },
+            error:function()
+            {
+                alert('请求出错');
+            },
+            complete:function()
+            {
+                // $('#tips').hide();
+            }
+        });
+    return false;
+}
+
+$(function () { $('#addUserModal').on('hide.bs.modal', function () {
+    // 关闭时清空edit状态为add
+    $("#act").val("add");
+    location.reload();
+})
+});
+
+//获取td的值
+$( "#block tr" ).click( function() {//给每行绑定了一个点击事件
+    var td = $( this ).find( "td").eq(1).text();//this指向了当前点击的行，通过find我们获得了该行所有的td对象
+
+    //题中说到某个td，为了演示所以我们假设是要获得第3个td的数据
+} );

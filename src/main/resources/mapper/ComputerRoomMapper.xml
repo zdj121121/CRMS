@@ -141,7 +141,7 @@
     <include refid="Base_Column_List" />
     from t_computerroom
 
-    where ${keyWord}=${keyValue}
+    where ${keyWord} like ${keyValue}
 
     <if test="start!=null and size!=null">
       limit #{start},#{size}
@@ -149,6 +149,6 @@
   </select>
 
   <select id="getSelectiveNum" parameterType="Map" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM t_computerroom where ${keyWord}=${keyValue}
+    SELECT COUNT(*) FROM t_computerroom where ${keyWord} like ${keyValue}
   </select>
 </mapper>
