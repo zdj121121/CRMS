@@ -40,6 +40,7 @@ public class UserController {
             result.put("IsAdmin",myuser.getIsAdmin());
             result.put("userName",myuser.getUserName());
         }
+        
         return result;
     }
 
